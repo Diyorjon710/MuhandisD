@@ -1,0 +1,38 @@
+{% extends 'uz/base.html' %}
+
+
+{% block content %}
+<!-- CONTENT NEWS -->
+<section>
+  <div class="container-fluid container-lg mt-5">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-8 mt-5">
+
+        <article class="news-detail">
+
+          <div class="news-img">
+            <img src="{{ object.news_photo.url }}" class="img-fluid" title="None" alt="None">
+          </div>
+
+          <h4 class="p-4">{{ object.news_theme_uz }}</h4>
+
+          <hr style="color: #0096db; opacity: 0.6; height: 3px; margin-top: 5px">
+
+          <p style="margin-bottom: 11px; text-align: justify;">
+            <span style="font-size: 11pt;">
+              <span style="line-height: 107%;">
+                <span>{{ object.news_full_description_uz }}</span>
+              </span>
+            </span>
+          </p>
+
+          <hr style="color: #0096db; opacity: 0.6; height: 3px; margin-top: 5px">
+
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- CONTENT NEWS -->
+{% endblock content %}

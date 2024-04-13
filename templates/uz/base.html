@@ -1,0 +1,174 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% blocktrans %} Muhandis-D {% endblocktrans %}</title>
+
+    <!-- All CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/logo.png' %}" width="261" height="66">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-caret-down"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav    ms-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'HomePage_UZ' %}">
+                            {% blocktrans %} Bosh sahifa {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'HomePage_UZ' %}">
+                            {% blocktrans %} Yangiliklar {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'HomePage_UZ' %}">
+                            {% blocktrans %} Faoliyat {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'HomePage_UZ' %}">
+                            {% blocktrans %} Loyihalar {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'HomePage_UZ' %}">
+                            {% blocktrans %} Hamkorlar {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'HomePage_UZ' %}">
+                            {% blocktrans %} Bog'lanish {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <form id="language_form" action="{% url 'set_language' %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}">
+                            <input type="hidden" name="language" id="language_code_input">
+                        </form>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% if LANGUAGE_CODE == 'uz' %}
+                            <img src="{% static 'images/uz_flag.jpg' %}" class="img m-1" alt="UZ">UZ
+                            {% elif LANGUAGE_CODE == 'en' %}
+                            <img src="{% static 'images/en_flag.jpg' %}" class="img m-1" alt="EN">EN
+                            {% else %}
+                            <img src="{% static 'images/ru_flag.jpg' %}" class="img m-1" alt="RU">RU
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu uli">
+                            <li>
+                                <a class="dropdown-item liu" onclick="changeLanguage('uz');" href="#" data-lang="uz">
+                                    <img src="{% static 'images/uz_flag.jpg' %}" class="img m-1" alt="UZ">UZ
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item liu" onclick="changeLanguage('en');" href="#" data-lang="en">
+                                    <img src="{% static 'images/en_flag.jpg' %}" class="img m-1" alt="EN">EN
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item liu" onclick="changeLanguage('ru');" href="#" data-lang="ru">
+                                    <img src="{% static 'images/ru_flag.jpg' %}" class="img m-1" alt="RU">RU
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- NAVBAR END -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- FOOTER START -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static 'images/logo.png' %}" width="261" height="66">
+                    </a>
+                </div>
+                <div class="footer-col">
+                    <ul>
+                        <li><a href="#">{% blocktrans %} Bosh sahifa {% endblocktrans %}</a></li>
+                        <li><a href="#">{% blocktrans %} Loyiha haqida {% endblocktrans %}</a></li>
+                        <li><a href="#portfolio">{% blocktrans %} Qilingan loyihalar {% endblocktrans %} </a></li>
+                        <li><a href="#new">{% blocktrans %} Yangiliklar {% endblocktrans %} </a></li>
+                        <li><a href="#activity">{% blocktrans %} Faoliyat {% endblocktrans %} </a></li>
+                        <li><a href="#contact">{% blocktrans %} Biz bilan bog'lanish {% endblocktrans %} </a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <div class="contact">
+                        <a class="contacts-a" href="#">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span class="icon-text">
+                                {%blocktrans%} 100121 Toshkent, Shota Rustaveli ko'chasi,156-uy {%endblocktrans%}</span>
+                        </a>
+                        <a class="contacts-a" href="tel:+998781294040">
+                            <i class="fa-solid fa-phone"></i>
+                            <span class="icon-text">+998 78 129 40 40</span>
+                        </a>
+                        <a class="contacts-a" href="mailto:info@kiut.uz">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="icon-text">info@kiut.uz</span>
+                        </a>
+                    </div>
+                    <h4>{% blocktrans %} Obuna bo'ling {% endblocktrans %} </h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/kiut.uz/?locale=ru_RU">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UC9ewNmt05rUSXoZHBsMBYjA">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/kiut.uz_rasmiy/">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://pl.linkedin.com/company/yeoju-technical-institute-in-tashkent">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER END -->
+
+    <!-- All JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        function changeLanguage(languageCode) {
+            document.getElementById('language_code_input').value = languageCode;
+            document.getElementById('language_form').submit();
+        }
+    </script>
+    <!-- <script src="{% static 'js/index.js' %}"></script> -->
+</body>
+
+</html>

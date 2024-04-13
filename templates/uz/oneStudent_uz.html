@@ -1,0 +1,38 @@
+{% extends 'uz/base.html' %}
+
+
+{% block content %}
+<!-- STUDENTS START -->
+<div class="profile-box">
+    <div class="row">
+
+        <div class="col-lg-8 col-md-7 detail-px ">
+            <h3>Profile</h3>
+            <p>{{ object.student_info_uz }}</p>
+        </div>
+
+        <div class="col-lg-4 col-md-5 leftgh">
+            <div class="img-box">
+                <img src="{{ object.student_photo.url }}" alt="">
+            </div>
+            <div class="name-det">
+                <h2>{{ object.student_fullname_uz }}</h2>
+                <h3>Contact</h3>
+                <a href="{{ object.student_link1 }}" style="text-decoration: none; color: white;">
+                    <p>Twitter</p>
+                </a>
+                <a href="{{ object.student_link }}" style="text-decoration: none; color: white;">
+                    <p>Facebook</p>
+                </a>
+                <a href="{{ object.student_link3 }}" style="text-decoration: none; color: white;">
+                    <p>Linkedln</p>
+                </a>
+                <a href="{{ object.student_link4 }}" style="text-decoration: none; color: white;">
+                    <p>Telegram</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- STUDENTS END -->
+{% endblock content %}

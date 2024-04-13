@@ -1,0 +1,721 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% blocktrans %} Muhandis-D {% endblocktrans %}</title>
+
+    <!-- All CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/logo.png' %}" width="261" height="66">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-caret-down"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav    ms-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% blocktrans %} Bosh sahifa {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#new">{% blocktrans %} Yangiliklar {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#activity">{% blocktrans %} Faoliyat {% endblocktrans %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">{% blocktrans %} Loyihalar {% endblocktrans %} </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">{% blocktrans %} Hamkorlar {% endblocktrans %} </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact"> {% blocktrans %} Bog'lanish {% endblocktrans %} </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <form id="language_form" action="{% url 'set_language' %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}">
+                            <input type="hidden" name="language" id="language_code_input">
+                        </form>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% if LANGUAGE_CODE == 'uz' %}
+                            <img src="{% static 'images/uz_flag.jpg' %}" class="img m-1" alt="UZ">UZ
+                            {% elif LANGUAGE_CODE == 'en' %}
+                            <img src="{% static 'images/en_flag.jpg' %}" class="img m-1" alt="EN">EN
+                            {% else %}
+                            <img src="{% static 'images/ru_flag.jpg' %}" class="img m-1" alt="RU">RU
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu uli">
+                            <li>
+                                <a class="dropdown-item liu" onclick="changeLanguage('uz');" href="#" data-lang="uz">
+                                    <img src="{% static 'images/uz_flag.jpg' %}" class="img m-1" alt="UZ">UZ
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item liu" onclick="changeLanguage('en');" href="#" data-lang="en">
+                                    <img src="{% static 'images/en_flag.jpg' %}" class="img m-1" alt="EN">EN
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item liu" onclick="changeLanguage('ru');" href="#" data-lang="ru">
+                                    <img src="{% static 'images/ru_flag.jpg' %}" class="img m-1" alt="RU">RU
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- NAVBAR END -->
+
+    <!-- CAROUSEL -->
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            {% for item in carousel_first %}
+            <div class="carousel-item active" style="background: #777; height: 600px;" data-bs-interval="2000">
+                <img src="{{ item.carousel_photo.url }}" style="background-size: cover; opacity: 0.5;" class=" w-100"
+                    alt="...">
+                <div class="carousel-caption d-none d-md-block" style=" color: #ffffff;
+                    text-shadow: -1px 1px 0 #000,
+                                  1px 1px 0 #000,
+                                  1px -1px 0 #000,
+                                 -1px -1px 0 #000;">
+                    <h5>{{ item.carousel_text_uz }}</h5>
+                    <p>{{ item.carousel_subtext_uz }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% for item in carousel %}
+            <div class="carousel-item" style="background: #777; height: 600px;" data-bs-interval="2000">
+                <img src="{{ item.carousel_photo.url }}" style="background-size: cover; opacity: 0.5;" class=" w-100"
+                    alt="...">
+                <div class="carousel-caption d-none d-md-block" style=" color: #ffffff;
+                    text-shadow: -1px 1px 0 #000,
+                                  1px 1px 0 #000,
+                                  1px -1px 0 #000,
+                                 -1px -1px 0 #000;">
+                    <h5>{{ item.carousel_text_uz }}</h5>
+                    <p>{{ item.carousel_subtext_uz }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- CAROUSEL END -->
+
+    <!-- NEWS SECTION -->
+    <section id="new" class="about section-padding">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header  text-center pb-5">
+                    <h2 class="fw-bold">{% blocktrans %} Yangiliklar {% endblocktrans %} </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                {% for item in news %}
+                <div class="col">
+                    <div class="card" id="card">
+                        <img src="{{ item.news_photo.url }}" class="card-img-top" alt="{{ item.news_theme_uz }}">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <small class="text-muted">KIUT - {{ item.created_date }}</small>
+                            </p>
+                            <h5 class="card-title fw-bold">{{ item.news_theme_uz }}</h5>
+                            <p class="card-text">{{ item.news_short_description_uz }}</p>
+                            <a href="{% url 'oneNewsDetailUZ' item.pk %}" class="card-link cl">
+                                <span>{% blocktrans %} To'liq ko'rish {% endblocktrans %} <i id="icon"
+                                        class="fa-solid fa-arrow-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+
+            <div class="row mt-5">
+                <div class="col"></div>
+
+                <div class="col vid loc">
+                    <a href="{% url 'allNewsUZ' %}" class="btn butn fw-bold" type="button"
+                        style="text-decoration: none; color: #fff;">
+                        {% blocktrans %} Barcha yangiliklarni ko'rish {% endblocktrans %}
+                        <i id="icon" class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="col"></div>
+            </div>
+
+        </div>
+    </section>
+    <!-- NEWS SECTION END -->
+
+    <!-- ACTIVITY SECTION -->
+    <section class="services section-padding" id="activity">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header  text-center pb-5">
+                    <h2 class="fw-bold">{% blocktrans %} Faoliyat Turlari {% endblocktrans %} </h2>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div id="carouselExampleControls" style="background-color: #fff;" class="carousel slide"
+                data-bs-ride="carousel">
+                <div class="carousel-inner" id="carinner">
+
+                    <div class="carousel-item active">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha1.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            CAD</h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">CAD
+                                            {% blocktrans %} (Computer-Aided Design) 3D model qurish, tarkibiy
+                                            detallarni yaratish va kompyuter yordamidadizayn va ishlab chigarishni oson
+                                            va samarali qilishgayordam
+                                            beradigan kompyuter
+                                            dasturlari. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha2.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            Industry 4.0</h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;"> {% blocktrans %} Industry 4.0
+                                            sanoatning yangi o'zgarishlarga mosravishda rivojlanishi va
+                                            avtomatlashtirishining yanada
+                                            ko'payishi uchun innovatsion texnologiyalar,avtomatlashtirilgan
+                                            tizimlar, ma'lumotlar
+                                            tahlili,internet of things (loT), sensortexnika, va boshga
+                                            texnologiyalardan foydalanishni
+                                            ifodalaydi. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha3.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            PLC</h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;"> {% blocktrans %} (Programmable
+                                            Logic Controller) elektr texnikasi va avtomatlashtirilgan boshqaruv
+                                            sohasida ishlatiluvchi
+                                            ma'lumotlarni o'qib olish, tushunish, va boshqarish uchun ishlab
+                                            chiqarilgan avtomatik qurilma
+                                            va boshqaruv tizimi. {% endblocktrans %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha4.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Pnevmoavtomatika {% endblocktrans %} </h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">
+                                            {% blocktrans %} Pnevmoavtomatika-Havo
+                                            yordamida avtomatik tarzda tizmlarni boshqarishni
+                                            o'rgatadi. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha5.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Sensorika {% endblocktrans %} </h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">{% blocktrans %} Elektronika va
+                                            muhandislik sohalari bo'yichaishlatiluvchi sensorni o'rganish va
+                                            ularning ishlashprinsiplari,
+                                            sensorni boshqarish va ma'lumot olishning nazariy va amaliy asoslari
+                                            bilan shug'ullanadigan
+                                            soha. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha6.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            Arduino</h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">{% blocktrans %} Arduino
+                                            platformasi, sensorlar, aktuatorlar,yordamchi qurilmalar va boshga
+                                            elektronik modullarni
+                                            birlashtirish, dasturlashn va boshgarisiishlatiladi. {% endblocktrans %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha7.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Vodorod, quyosh,
+                                            shamol energiyalari {% endblocktrans %} </h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">{% blocktrans %} Qayta tiklanuvchi
+                                            energiya manbalarini xususanvodorod yoqilg'isi shamol energiyasi va
+                                            quyoshenergiyasini
+                                            o'rganish, ulardan elekr energiyasini olishtexnalogiyalarini organish
+                                            maqsad qilinadi. {% endblocktrans %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha8.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Gidroavtomatika {% endblocktrans %} </h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">
+                                            {% blocktrans %} Gidroavtomatika-Har ganday mashina va tizimlarni
+                                            boshqarishdagidravlik
+                                            va avtomatik tizimlarni
+                                            ishlatishni o'rgatadigan muhandislik sohasi. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha9.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Elektrotexnika-Elektr {% endblocktrans %}
+                                        </h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">
+                                            {% blocktrans %} Elektrotexnika-Elektr energiyasini boshqarish, uzatish va
+                                            uning
+                                            tuzilishlarini o'rganuvchi va
+                                            amalga oshiruvchi muhandislik sohasi. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha10.jpeg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Robot-manipulyator {% endblocktrans %}
+                                        </h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;">{% blocktrans %} Har xil turdagi
+                                            vazifalarni bajarish uchun ishlab chiqarilgan, qo'llaniladigan va
+                                            modifikatsiyalash mumkin
+                                            bo'lgan qurilma turlari bo'lib, biror narsani ko'chirish,
+                                            joylashtirish,olish yoki boshqa
+                                            harakatlarini amalga oshirishda
+                                            foydalaniladi. {% endblocktrans %} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card kart mb-3">
+                            <div class="row g-0">
+                                <div class="col-12 col-md-4">
+                                    <img src="{% static 'images/activities/soha11.jpg' %}"
+                                        class="img-fluid rasm rounded-start mb-4" alt="...">
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body mt-5">
+                                        <h5 class="card-title fw-bolder mt-3 " style="color: #fff;font-size: 45px;">
+                                            {% blocktrans %} Servo {% endblocktrans %}</h5>
+                                        <p class="card-text  fw-bold mt-5 mx-3"
+                                            style="color: #fff;letter-spacing: 1px;"> {% blocktrans %} Boshqaruv
+                                            jarayonlarini avtomatlashtirish va to'gʻriboshqarishda juda samarali va
+                                            ishonchli
+                                            bo'lib,o'zgaruvchan va to'g'ri boshqariladigan harakatlarni
+                                            amalga oshirishga yordam beradi. {% endblocktrans %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+        </div>
+    </section>
+    <!-- ACTIVITY SECTION END -->
+
+    <!-- PROJECTS -->
+    <section id="portfolio" class="portfolio section-padding">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header  text-center pb-5">
+                        <h2 class="fw-bold">{% blocktrans %} Loyihalar {% endblocktrans %} </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4 ">
+
+                {% for item in projects_category %}
+                <div class="col">
+                    <div class="tcontainer">
+                        <div class="tcard">
+                            <div class="tface face1">
+                                <div class="tcontent">
+                                    <img src="{{ item.category_photo.url }}" class="trasm">
+                                </div>
+                            </div>
+                            <div class="tface face2">
+                                <div class="tcontent">
+                                    <h5 class="card-title fw-bold">{{ item.category_name_uz }}</h5>
+                                    <p>{{ item.category_text_uz }}</p>
+                                    <a href="{% url 'allProjectsUZ' item.pk %}">
+                                        {% blocktrans %} Barchasini ko'rish {% endblocktrans %} </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+    <!-- PROJECTS END -->
+
+    <!-- VIDEOS -->
+    <section class="section-padding">
+        <div class="container ">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                {% for item in project_videos %}
+                <div class="col">
+                    <div class="card" style="width: 21rem;">
+                        <video src="{{ item.video_file.url }}" class="card-img-top" controls></video>
+                        <div class="card-body">
+                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col"></div>
+
+                <div class="col vid loc">
+                    <a href="{% url 'allVideosUZ' %}" class="btn butn fw-bold" type="button"
+                        style="text-decoration: none; color: #fff;">
+                        {% blocktrans %} Barcha videolarni ko'rish {% endblocktrans %}
+                        <i id="icon" class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="col"></div>
+            </div>
+        </div>
+    </section>
+    <!-- VIDEOS END -->
+
+    <!-- STUDENTS -->
+    <section class="team section" id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header  text-center ">
+                        <h2 class="fw-bold"> {% blocktrans %} Bitiruvchilar {% endblocktrans %}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for item in students %}
+                <div class="col-12 mt-3 mb-2 col-md-6 col-lg-3" id="studentcard" style="cursor: pointer;">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <img src="{{ item.student_photo.url }}" alt="" class="img-fluid rounded-circle">
+                            <h3 class="card-title  py-2">
+                                <a href="{% url 'oneStudentDetailUZ' item.pk %}"
+                                    style="text-decoration: none; color: #000;">
+                                    {{ item.student_fullname_uz }}
+                                </a>
+                                <p class="card-text">{{ item.student_info_uz }}</p>
+                                <p class="socials">
+                                    <a href="{{ item.student_link1 }}"><i class="bi bi-twitter mx-1"></i></a>
+                                    <a href="{{ item.student_link2 }}"><i class="bi bi-facebook mx-1"></i></a>
+                                    <a href="{{ item.student_link3 }}"><i class="bi bi-linkedin  mx-1"></i></a>
+                                    <a href="{{ item.student_link4 }}"><i class="bi bi-telegram  mx-1"></i></a>
+                                </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="row mt-5 mb-5">
+                    <div class="col"></div>
+
+                    <div class="col vid loc mt-5">
+                        <a href="{% url 'allStudentsViewUZ' %}" class="btn butn fw-bold" type="button"
+                            style="text-decoration: none; color: #fff;">
+                            {% blocktrans %} Barcha talabalarni ko'rish {% endblocktrans %}
+                            <i id="icon" class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="col"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- STUDENTS END -->
+
+    <!-- PARTNERS -->
+    <section id="contact" class="contact section">
+        <div class="container  mb-5">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header  text-center pb-5">
+                        <h2 class="fw-bold">{% blocktrans %} Hamkorlar {% endblocktrans %} </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper">
+                <div class="slider">
+                    <div class="slide-track">
+
+                        {% for item in partners %}
+                        <div class="slide">
+                            <a href="{{ item.partner_link }}"><img src="{{ item.partner_photo.url }}" /></a>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- PARTNERS END -->
+
+    <!-- FOOTER START -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static 'images/logo.png' %}" width="261" height="66">
+                    </a>
+                </div>
+                <div class="footer-col">
+                    <ul>
+                        <li><a href="#">{% blocktrans %} Bosh sahifa {% endblocktrans %}</a></li>
+                        <li><a href="#">{% blocktrans %} Loyiha haqida {% endblocktrans %}</a></li>
+                        <li><a href="#portfolio">{% blocktrans %} Qilingan loyihalar {% endblocktrans %} </a></li>
+                        <li><a href="#new">{% blocktrans %} Yangiliklar {% endblocktrans %} </a></li>
+                        <li><a href="#activity">{% blocktrans %} Faoliyat {% endblocktrans %} </a></li>
+                        <li><a href="#contact">{% blocktrans %} Biz bilan bog'lanish {% endblocktrans %} </a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <div class="contact">
+                        <a class="contacts-a" href="#">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span class="icon-text">
+                                {%blocktrans%} 100121 Toshkent, Shota Rustaveli ko'chasi,156-uy {%endblocktrans%}</span>
+                        </a>
+                        <a class="contacts-a" href="tel:+998781294040">
+                            <i class="fa-solid fa-phone"></i>
+                            <span class="icon-text">+998 78 129 40 40</span>
+                        </a>
+                        <a class="contacts-a" href="mailto:info@kiut.uz">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="icon-text">info@kiut.uz</span>
+                        </a>
+                    </div>
+                    <h4>{% blocktrans %} Obuna bo'ling {% endblocktrans %} </h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/kiut.uz/?locale=ru_RU">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UC9ewNmt05rUSXoZHBsMBYjA">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/kiut.uz_rasmiy/">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://pl.linkedin.com/company/yeoju-technical-institute-in-tashkent">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER END -->
+
+    <!-- All JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        function changeLanguage(languageCode) {
+            document.getElementById('language_code_input').value = languageCode;
+            document.getElementById('language_form').submit();
+        }
+    </script>
+    <!-- <script src="{% static 'js/index.js' %}"></script> -->
+</body>
+
+</html>

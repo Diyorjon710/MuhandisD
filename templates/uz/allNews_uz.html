@@ -1,0 +1,30 @@
+{% extends 'uz/base.html' %}
+
+<!-- NEWS SECTION -->
+{% block content %}
+<section id="new" class="about section-padding mt-5">
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      {% for item in all_news %}
+      <div class="col">
+        <div class="card " id="card">
+          <img src="{{ item.news_photo.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <p class="card-text"><small class="text-muted">KIUT - {{ item.created_date }}</small></p>
+            <h5 class="card-title fw-bold">{{ item.news_theme_uz }}</h5>
+            <p class="card-text">{{ item.news_short_description_uz }}</p>
+            <a href="{% url 'oneNewsDetailUZ' item.pk %}" class="card-link cl">
+              <span>Read More<i id="icon" class="fa-solid fa-arrow-right"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+<!-- NEWS SECTION END -->

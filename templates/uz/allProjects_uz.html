@@ -1,0 +1,44 @@
+{% extends 'uz/base.html' %}
+
+
+{% block content %}
+<!-- CONTENT -->
+{% load i18n %}
+<section class="team section-padding" id="team">
+    <div class="container">
+        <div class="row row-project">
+
+            {% for item in allProjects %}
+            <div class="card mb-3 card-project" style="max-width: 1250px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ item.project_photo.url }}" class="img-fluid rounded-start"
+                            alt="{{ item.project_name_uz }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.project_name_uz }}</h3>
+                            <p class="card-text">{{ item.project_text_uz }}</p>
+                            <p class="card-text-icon">
+                                <i class="bi bi-calendar3" style="color: #0074B9; padding-right: 5px;"></i>
+                                {{ item.date }}
+                            </p>
+                            <div class="d-flex justify-content-end">
+                                <button class="button-project"
+                                    style="background-color: #0074B9; color: white; border: white; border-radius: 5px; width: 150px; height: 35px;">
+                                    <a href="{% url 'oneProjectDetailUZ' item.pk %}"
+                                        style="text-decoration: none; color: white;">
+                                        {% blocktrans %} To'liq ko'rish {% endblocktrans %}
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+</section>
+<!-- CONTENT END -->
+{% endblock content %}

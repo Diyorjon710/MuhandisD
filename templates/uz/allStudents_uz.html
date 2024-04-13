@@ -1,0 +1,36 @@
+{% extends 'uz/base.html' %}
+
+{% block content %}
+<!-- STUDENTS START -->
+<section class="team section-padding" id="team">
+    <div class="container">
+        <div class="row">
+
+            {% for item in object_list %}
+            <div class="col-12 mt-3 mb-2 col-md-6 col-lg-3" id="studentcard" style="cursor: pointer;">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <img src="{{ item.student_photo.url }}" alt="" class="img-fluid rounded-circle">
+                        <h3 class="card-title  py-2">
+                            <a href="{% url 'oneStudentDetailUZ' item.pk %}"
+                                style="text-decoration: none; color: #000;">
+                                {{item.student_fullname_uz }}
+                            </a>
+                        </h3>
+                        <p class="card-text">{{ item.student_info_uz }}</p>
+                        <p class="socials">
+                            <a href="{{ item.student_link1 }}"><i class="bi bi-twitter mx-1"></i></a>
+                            <a href="{{ item.student_link2 }}"><i class="bi bi-facebook mx-1"></i></a>
+                            <a href="{{ item.student_link3 }}"><i class="bi bi-linkedin  mx-1"></i></a>
+                            <a href="{{ item.student_link4 }}"><i class="bi bi-telegram  mx-1"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+<!-- STUDENTS END -->
+{% endblock content %}
