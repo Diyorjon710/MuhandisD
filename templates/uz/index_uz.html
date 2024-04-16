@@ -100,8 +100,8 @@
 
             {% for item in carousel_first %}
             <div class="carousel-item active" style="background: #777; height: 600px;" data-bs-interval="2000">
-                <img src="{{ item.carousel_photo.url }}" style="background-size: cover; opacity: 0.5;" class=" w-100"
-                    alt="...">
+                <img src="{{ item.carousel_photo.url }}"
+                    style="background-size: cover; background-position: center; opacity: 0.5;" class=" w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block" style=" color: #ffffff;
                     text-shadow: -1px 1px 0 #000,
                                   1px 1px 0 #000,
@@ -115,8 +115,8 @@
 
             {% for item in carousel %}
             <div class="carousel-item" style="background: #777; height: 600px;" data-bs-interval="2000">
-                <img src="{{ item.carousel_photo.url }}" style="background-size: cover; opacity: 0.5;" class=" w-100"
-                    alt="...">
+                <img src="{{ item.carousel_photo.url }}"
+                    style="background-size: cover; background-position: center; opacity: 0.5;" class=" w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block" style=" color: #ffffff;
                     text-shadow: -1px 1px 0 #000,
                                   1px 1px 0 #000,
@@ -165,8 +165,18 @@
                             <p class="card-text">
                                 <small class="text-muted">KIUT - {{ item.created_date }}</small>
                             </p>
-                            <h5 class="card-title fw-bold">{{ item.news_theme_uz }}</h5>
-                            <p class="card-text">{{ item.news_short_description_uz }}</p>
+                            <h5 class="card-title fw-bold" style="--max-lines: 2;
+                            font-size: medium;
+                            display: -webkit-box;
+                            overflow: hidden;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: var(--max-lines);">{{ item.news_theme_uz }}</h5>
+                            <p class="card-text" style="--max-lines: 3;
+                            font-size: medium;
+                            display: -webkit-box;
+                            overflow: hidden;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: var(--max-lines);">{{ item.news_short_description_uz }}</p>
                             <a href="{% url 'oneNewsDetailUZ' item.pk %}" class="card-link cl">
                                 <span>{% blocktrans %} To'liq ko'rish {% endblocktrans %} <i id="icon"
                                         class="fa-solid fa-arrow-right"></i></span>
